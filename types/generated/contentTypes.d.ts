@@ -470,12 +470,44 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiOrderOrder extends Struct.CollectionTypeSchema {
-  collectionName: 'orders';
+export interface ApiClienteCliente extends Struct.CollectionTypeSchema {
+  collectionName: 'clientes';
   info: {
-    displayName: 'Order';
-    pluralName: 'orders';
-    singularName: 'order';
+    displayName: 'Cliente';
+    pluralName: 'clientes';
+    singularName: 'cliente';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    clerkUserId: Schema.Attribute.String & Schema.Attribute.Unique;
+    Cliente: Schema.Attribute.Relation<'oneToMany', 'api::pedido.pedido'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    direcciones: Schema.Attribute.Component<'pedido.pedido-direccion', true>;
+    email: Schema.Attribute.Email;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::cliente.cliente'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    telefono: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiHeadreHeadre extends Struct.SingleTypeSchema {
+  collectionName: 'headres';
+  info: {
+    displayName: 'configuracion-sitio';
+    pluralName: 'headres';
+    singularName: 'headre';
   };
   options: {
     draftAndPublish: true;
@@ -484,27 +516,111 @@ export interface ApiOrderOrder extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    customerName: Schema.Attribute.String & Schema.Attribute.Required;
-    items: Schema.Attribute.JSON;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<'oneToMany', 'api::order.order'> &
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::headre.headre'
+    > &
       Schema.Attribute.Private;
-    orderNumber: Schema.Attribute.UID;
-    paymentintentId: Schema.Attribute.String;
+    Logo: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
+    PrincipalProduct: Schema.Attribute.Media<'images' | 'videos' | 'audios'> &
+      Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
-    shippingAdress: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'shippingAddress'>;
-    statusOrder: Schema.Attribute.Enumeration<
-      ['pending', 'procesing', 'shipped', 'delivered', 'canceled']
-    >;
-    subtotal: Schema.Attribute.Decimal;
-    total: Schema.Attribute.Decimal & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    userEmail: Schema.Attribute.Email & Schema.Attribute.Required;
-    userId: Schema.Attribute.String;
+  };
+}
+
+export interface ApiInicioInicio extends Struct.SingleTypeSchema {
+  collectionName: 'inicios';
+  info: {
+    displayName: 'Inicio';
+    pluralName: 'inicios';
+    singularName: 'inicio';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    ctaDescription: Schema.Attribute.Text;
+    ctaImage: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    ctaTitle: Schema.Attribute.String;
+    heroDescription: Schema.Attribute.Text & Schema.Attribute.Required;
+    heroHighlight: Schema.Attribute.String & Schema.Attribute.Required;
+    heroImage: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    > &
+      Schema.Attribute.Required;
+    heroTitle: Schema.Attribute.String & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::inicio.inicio'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiPedidoPedido extends Struct.CollectionTypeSchema {
+  collectionName: 'pedidos';
+  info: {
+    displayName: 'Pedido';
+    pluralName: 'pedidos';
+    singularName: 'pedido';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    cliente: Schema.Attribute.Relation<'manyToOne', 'api::cliente.cliente'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    direccionEnvio: Schema.Attribute.Component<
+      'pedido.pedido-direccion',
+      false
+    >;
+    envio: Schema.Attribute.Decimal;
+    estado: Schema.Attribute.Enumeration<
+      [
+        'pendiente_pago',
+        'pagado',
+        'en_produccion',
+        'listo_despacho',
+        'enviado',
+        'entregado',
+        'cancelado',
+        'reembolsado',
+      ]
+    > &
+      Schema.Attribute.DefaultTo<'pendiente_pago'>;
+    historialEstados: Schema.Attribute.Component<
+      'pedido.pedido-historial-estado',
+      true
+    >;
+    items: Schema.Attribute.Component<'pedido.pedido-item', true>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::pedido.pedido'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    subtotal: Schema.Attribute.Decimal;
+    total: Schema.Attribute.Decimal;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    wompiReference: Schema.Attribute.String & Schema.Attribute.Unique;
+    wompiTransactionId: Schema.Attribute.String;
   };
 }
 
@@ -526,6 +642,8 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     description: Schema.Attribute.Text;
     featured: Schema.Attribute.Boolean;
+    features: Schema.Attribute.JSON;
+    heroPick: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
       Schema.Attribute.Required;
     images: Schema.Attribute.Media<
@@ -544,7 +662,45 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     price: Schema.Attribute.Decimal & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
     slug: Schema.Attribute.UID<'name'>;
+    spotlight: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     stock: Schema.Attribute.Integer;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiReviewReview extends Struct.CollectionTypeSchema {
+  collectionName: 'reviews';
+  info: {
+    displayName: 'Review';
+    pluralName: 'reviews';
+    singularName: 'review';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    comment: Schema.Attribute.Text;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::review.review'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    rating: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 5;
+          min: 1;
+        },
+        number
+      >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1063,8 +1219,12 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::category.category': ApiCategoryCategory;
-      'api::order.order': ApiOrderOrder;
+      'api::cliente.cliente': ApiClienteCliente;
+      'api::headre.headre': ApiHeadreHeadre;
+      'api::inicio.inicio': ApiInicioInicio;
+      'api::pedido.pedido': ApiPedidoPedido;
       'api::product.product': ApiProductProduct;
+      'api::review.review': ApiReviewReview;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

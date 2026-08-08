@@ -1,0 +1,66 @@
+{
+  "kind": "collectionType",
+  "collectionName": "pedidos",
+  "info": {
+    "singularName": "pedido",
+    "pluralName": "pedidos",
+    "displayName": "Pedido"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "cliente": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::cliente.cliente",
+      "inversedBy": "Cliente"
+    },
+    "items": {
+      "type": "component",
+      "component": "pedido.pedido-item",
+      "repeatable": true
+    },
+    "subtotal": {
+      "type": "decimal"
+    },
+    "envio": {
+      "type": "decimal"
+    },
+    "total": {
+      "type": "decimal"
+    },
+    "estado": {
+      "type": "enumeration",
+      "default": "pendiente_pago",
+      "enum": [
+        "pendiente_pago",
+        "pagado",
+        "en_produccion",
+        "listo_despacho",
+        "enviado",
+        "entregado",
+        "cancelado",
+        "reembolsado"
+      ]
+    },
+    "wompiReference": {
+      "type": "string",
+      "unique": true
+    },
+    "wompiTransactionId": {
+      "type": "string"
+    },
+    "direccionEnvio": {
+      "type": "component",
+      "component": "pedido.pedido-direccion",
+      "repeatable": false
+    },
+    "historialEstados": {
+      "type": "component",
+      "component": "pedido.pedido-historial-estado",
+      "repeatable": true
+    }
+  }
+}

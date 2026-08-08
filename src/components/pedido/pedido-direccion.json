@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_pedido_pedido_direccions",
+  "info": {
+    "displayName": "pedido.direccion"
+  },
+  "options": {},
+  "attributes": {
+    "direccion": {
+      "type": "string"
+    },
+    "ciudad": {
+      "type": "string"
+    },
+    "telefono": {
+      "type": "string"
+    },
+    "notas": {
+      "type": "text"
+    },
+    "nombreCompleto": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

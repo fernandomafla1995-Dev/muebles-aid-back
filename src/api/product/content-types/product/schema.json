@@ -66,6 +66,17 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::category.category"
+    },
+    "heroPick": {
+      "type": "boolean",
+      "default": false
+    },
+    "spotlight": {
+      "type": "boolean",
+      "default": false
+    },
+    "features": {
+      "type": "json"
     }
   }
 }

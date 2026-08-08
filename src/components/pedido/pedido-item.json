@@ -1,0 +1,24 @@
+{
+  "collectionName": "components_pedido_pedido_items",
+  "info": {
+    "displayName": "pedido.item"
+  },
+  "options": {},
+  "attributes": {
+    "producto": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::product.product"
+    },
+    "nombreProducto": {
+      "type": "string"
+    },
+    "precioUnitario": {
+      "type": "decimal"
+    },
+    "cantidad": {
+      "type": "integer"
+    }
+  },
+  "config": {}
+}

@@ -1,0 +1,33 @@
+{
+  "kind": "singleType",
+  "collectionName": "headres",
+  "info": {
+    "singularName": "headre",
+    "pluralName": "headres",
+    "displayName": "configuracion-sitio"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Logo": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "PrincipalProduct": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "videos",
+        "audios"
+      ]
+    }
+  }
+}

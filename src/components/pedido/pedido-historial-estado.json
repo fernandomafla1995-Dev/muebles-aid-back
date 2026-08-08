@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_pedido_pedido_historial_estados",
+  "info": {
+    "displayName": "pedido.historial-estado"
+  },
+  "options": {},
+  "attributes": {
+    "estado": {
+      "type": "string"
+    },
+    "fecha": {
+      "type": "datetime"
+    },
+    "nota": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}
