@@ -592,6 +592,7 @@ export interface ApiPedidoPedido extends Struct.CollectionTypeSchema {
     estado: Schema.Attribute.Enumeration<
       [
         'pendiente_pago',
+        'en_verificacion',
         'pagado',
         'en_produccion',
         'listo_despacho',
