@@ -77,6 +77,12 @@
     },
     "features": {
       "type": "json"
+    },
+    "color": {
+      "type": "string"
+    },
+    "grupoVariante": {
+      "type": "string"
     }
   }
 }
