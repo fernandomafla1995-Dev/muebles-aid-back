@@ -83,6 +83,9 @@
     },
     "grupoVariante": {
       "type": "string"
+    },
+    "medidas": {
+      "type": "string"
     }
   }
 }

@@ -660,6 +660,7 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     measurement: Schema.Attribute.JSON;
+    medidas: Schema.Attribute.String;
     name: Schema.Attribute.String & Schema.Attribute.Required;
     originalPrice: Schema.Attribute.Decimal;
     price: Schema.Attribute.Decimal & Schema.Attribute.Required;
